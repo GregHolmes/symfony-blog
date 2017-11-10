@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    test
+{% endblock %}
+
+{% block body %}
+    {% include 'includes/nav_bar.html.twig' %}
+
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">Blog tutorial</h1>
+            <p class="lead blog-description">A basic description of the blog, built in Symfony, content on Contentful, styled in Bootstrap 3, secured by Auth0.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-lg-8 col-xl-8">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="col-sm-8 blog-main">
+                {% for blogPost in blogPosts %}
+                    {% set paragraphs = blogPost.description|split('</p>') %}
+                    {% set firstParagraph = paragraphs|first ~ '</p>' %}
+                    <div class="blog-post">
+                        <h2 class="blog-post-title">
+                            <a href="{{ path('entry', {'slug': blogPost.slug}) }}">
+                                {{ blogPost.title }}
+                            </a>
+                        </h2>
+                        <p class="blog-post-meta">
+                            {{ blogPost.getUpdatedAt|date('F j, Y') }} by
+
+                            {% if blogPost.author %}
+                                <a href="{{ path('author', {'name': blogPost.author.username|url_encode }) }}">
+                                    {{ blogPost.author.name }}
+                                </a>
+                            {% else %}
+                                Unknown Author
+                            {% endif %}
+                        </p>
+                        {{ firstParagraph|raw }}<br />
+                        <a href="{{ path('entry', {'slug': blogPost.slug}) }}">Read more</a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        You have no blog articles. Please go to Contentful to publish an article.
+                    </div>
+                {% endfor %}
+
+                {#{% set canPrevious = page > 1 %}#}
+                {#{% set canNext = blogPost.getLimit + blogPost.getSkip <= blogPost.getTotal %}#}
+
+                {#<nav>#}
+                    {#<ul class="pager">#}
+                        {#<li class="previous {% if canPrevious == false %}disabled{% endif %}">#}
+                            {#<a href="{% if canPrevious %}{{ path('entries', {'page': page - 1}) }}{% endif %}">#}
+                                {#<span aria-hidden="true">&larr;</span> Older#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#<li class="next {% if canNext == false %}disabled{% endif %}">#}
+                            {#<a href="{% if canNext %}{{ path('entries', {'page': page + 1}) }}{% endif %}">#}
+                                {#Newer <span aria-hidden="true">&rarr;</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                    {#</ul>#}
+                {#</nav>#}
+            </div>
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                <div class="sidebar-module">
+                    <h4>Authors</h4>
+                    <ol class="list-unstyled">
+                        {% for author in authors %}
+                            <li><a href="{{ path('author', {'name': author.username|url_encode }) }}">{{ author.name }}</a></li>
+                        {% else %}
+                            <li>No authors registered.</li>
+                        {%  endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{  parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'includes/javascripts.html.twig' %}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+    {% include 'includes/nav_bar.html.twig' %}
+
+    <div class="container">
+        <div class="blog-header">
+            <h2 class="blog-title"></h2>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 blog-main">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="bg-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                {{ form_start(form) }}
+                    <div class="col-md-12">
+                        <div class="form-group col-md-4">
+                            {{ form_row(form.title) }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{ form_row(form.slug) }}
+                        </div>
+                        <div class="form-group col-md-12">
+                            {{ form_row(form.description) }}
+                        </div>
+                        <div class="form-group col-md-12">
+                            {{ form_row(form.body) }}
+                        </div>
+                        <div class="form-group col-md-4 pull-right">
+                            {{ form_widget(form.create) }}
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'includes/javascripts.html.twig' %}
+{% endblock %}

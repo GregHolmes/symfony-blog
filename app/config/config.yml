@@ -37,6 +37,11 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        auth0_base_url: '%auth0_base_url%'
+        auth0_client_id: '%auth0_client_id%'
+        auth0_callback_url: '%auth0_callback_url%'
+        auth0_domain: '%auth0_domain%'
 
 # Doctrine Configuration
 doctrine:
@@ -74,3 +79,13 @@ doctrine_migrations:
     table_name: migration_versions
     name: Application Migrations
     organize_migrations: false # Version >=1.2 Possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
+
+hwi_oauth:
+    firewall_names: [secured_area]
+    resource_owners:
+        auth0:
+            type: auth0
+            base_url: '%auth0_base_url%'
+            client_id: '%auth0_client_id%'
+            client_secret: '%auth0_client_secret%'
+            scope: 'email'

@@ -17,6 +17,7 @@ class Author
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
@@ -58,28 +59,28 @@ class Author
     /**
      * @var string
      *
-     * @ORM\Column(type="text", name="phone")
+     * @ORM\Column(type="text", name="phone", nullable=true)
      */
     protected $phone;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", name="facebook")
+     * @ORM\Column(type="text", name="facebook", nullable=true)
      */
     protected $facebook;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", name="twitter")
+     * @ORM\Column(type="text", name="twitter", nullable=true)
      */
     protected $twitter;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", name="github")
+     * @ORM\Column(type="text", name="github", nullable=true)
      */
     protected $github;
 
