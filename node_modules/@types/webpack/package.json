@@ -1,0 +1,61 @@
+{
+    "name": "@types/webpack",
+    "version": "3.8.1",
+    "description": "TypeScript definitions for webpack",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Qubo",
+            "url": "https://github.com/tkqubo",
+            "githubUsername": "tkqubo"
+        },
+        {
+            "name": "Benjamin Lim",
+            "url": "https://github.com/bumbleblym",
+            "githubUsername": "bumbleblym"
+        },
+        {
+            "name": "Boris Cherny",
+            "url": "https://github.com/bcherny",
+            "githubUsername": "bcherny"
+        },
+        {
+            "name": "Tommy Troy Lin",
+            "url": "https://github.com/tommytroylin",
+            "githubUsername": "tommytroylin"
+        },
+        {
+            "name": "Mohsen Azimi",
+            "url": "https://github.com/mohsen1",
+            "githubUsername": "mohsen1"
+        },
+        {
+            "name": "Jonathan Creamer",
+            "url": "https://github.com/jcreamer898",
+            "githubUsername": "jcreamer898"
+        },
+        {
+            "name": "Ahmed T. Ali",
+            "url": "https://github.com/ahmed-taj",
+            "githubUsername": "ahmed-taj"
+        },
+        {
+            "name": "Alan Agius",
+            "url": "https://github.com/alan-agius4",
+            "githubUsername": "alan-agius4"
+        }
+    ],
+    "main": "",
+    "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/tapable": "*",
+        "@types/uglify-js": "*",
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "0552598e4cbc8fa998201a0f5c30ef44fb96a2545fcaf23b84b110a24d1d32cd",
+    "typeScriptVersion": "2.0"
+}
