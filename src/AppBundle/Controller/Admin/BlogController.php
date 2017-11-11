@@ -6,6 +6,7 @@ use AppBundle\Entity\Author;
 use AppBundle\Entity\BlogPost;
 use AppBundle\Form\AuthorFormType;
 use AppBundle\Form\EntryFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,25 @@ class BlogController extends Controller
 {
     /** @var integer */
     const ENTRY_LIMIT = 5;
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var \Doctrine\Common\Persistence\ObjectRepository */
+    private $authorRepository;
+
+    /** @var \Doctrine\Common\Persistence\ObjectRepository */
+    private $blogPostRepository;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+        $this->blogPostRepository = $entityManager->getRepository('AppBundle:BlogPost');
+        $this->authorRepository = $entityManager->getRepository('AppBundle:Author');
+    }
 
     /**
      * @Route("/", name="admin_index")
@@ -36,15 +56,12 @@ class BlogController extends Controller
             $page = $request->get('page');
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $author = $entityManager->getRepository('AppBundle:Author')
-            ->findOneByUsername($this->getUser()->getUserName());
+        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
 
         $blogPosts = [];
 
         if ($author) {
-            $blogPosts = $entityManager->getRepository('AppBundle:BlogPost')
-                ->findByAuthor($author);
+            $blogPosts = $this->blogPostRepository->findByAuthor($author);
         }
 
         return $this->render('admin/blog/entries.html.twig', [
@@ -62,24 +79,22 @@ class BlogController extends Controller
      */
     public function deleteEntryAction($entryId)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $author = $entityManager->getRepository('AppBundle:Author')
-            ->findOneByUsername($this->getUser()->getUserName());
-
-        $blogPost = $entityManager->getRepository('AppBundle:BlogPost')->findOneBySlug($entryId);
+        $blogPost = $this->blogPostRepository->findOneBySlug($entryId);
 
         if (!$blogPost) {
             // No blog post,
             exit;
         }
 
+        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
+
         if ($author !== $blogPost->getAuthor()) {
             // Not same author
             exit;
         }
 
-        $entityManager->remove($blogPost);
-        $entityManager->flush();
+        $this->entityManager->remove($blogPost);
+        $this->entityManager->flush();
 
         $this->addFlash('success','Entry was deleted!');
 
@@ -97,9 +112,7 @@ class BlogController extends Controller
     {
         $blogPost = new BlogPost();
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $author = $entityManager->getRepository('AppBundle:Author')
-            ->findOneByUsername($this->getUser()->getUserName());
+        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
         $blogPost->setAuthor($author);
 
         $form = $this->createForm(EntryFormType::class, $blogPost);
@@ -107,8 +120,8 @@ class BlogController extends Controller
 
         // Check is valid
         if ($form->isValid()) {
-            $entityManager->persist($blogPost);
-            $entityManager->flush($blogPost);
+            $this->entityManager->persist($blogPost);
+            $this->entityManager->flush($blogPost);
 
             $this->addFlash('success','Congratulations! Your post is created. It may take 30 seconds for Contentful\'s to process the entry though.');
 
@@ -129,10 +142,8 @@ class BlogController extends Controller
      */
     public function createAuthorAction(Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-
         // Check whether user already has an author.
-        if ($entityManager->getRepository('AppBundle:Author')->findOneByUsername($this->getUser()->getUserName())) {
+        if ($this->authorRepository->findOneByUsername($this->getUser()->getUserName())) {
             // Redirect to dashboard.
             $this->addFlash('error','Unable to create author, author already exists!');
 
@@ -148,8 +159,8 @@ class BlogController extends Controller
 
         // Check is valid
         if ($form->isValid()) {
-            $entityManager->persist($author);
-            $entityManager->flush($author);
+            $this->entityManager->persist($author);
+            $this->entityManager->flush($author);
 
             $request->getSession()->set('user_is_author', true);
             $this->addFlash('success','Congratulations! You are now an author.');

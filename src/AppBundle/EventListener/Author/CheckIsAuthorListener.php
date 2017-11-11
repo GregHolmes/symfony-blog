@@ -39,7 +39,6 @@ class CheckIsAuthorListener
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-
     }
 
     /**

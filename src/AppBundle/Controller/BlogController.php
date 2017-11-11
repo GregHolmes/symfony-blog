@@ -2,12 +2,32 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class BlogController extends Controller
 {
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var \Doctrine\Common\Persistence\ObjectRepository */
+    private $authorRepository;
+
+    /** @var \Doctrine\Common\Persistence\ObjectRepository */
+    private $blogPostRepository;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+        $this->blogPostRepository = $entityManager->getRepository('AppBundle:BlogPost');
+        $this->authorRepository = $entityManager->getRepository('AppBundle:Author');
+    }
+
     /**
      * @Route("/", name="index")
      * @Route("/entries", name="entries")
@@ -24,12 +44,9 @@ class BlogController extends Controller
             $page = $request->get('page');
         }
 
-        $blogPostRepo = $this->getDoctrine()->getManager()->getRepository('AppBundle:BlogPost');
-        $blogPosts = $blogPostRepo->findAll();
-
         return $this->render('blog/entries.html.twig', [
-            'blogPosts' => $blogPosts,
-            'authors' => $this->getAuthors(),
+            'blogPosts' => $this->blogPostRepository->findAll(),
+            'authors' => $this->authorRepository->findAll(),
             'page' => $page
         ]);
     }
@@ -43,9 +60,7 @@ class BlogController extends Controller
      */
     public function entryAction($slug)
     {
-        $blogPostRepo = $this->getDoctrine()->getManager()->getRepository('AppBundle:BlogPost');
-
-        $blogPost = $blogPostRepo->findOneBySlug($slug);
+        $blogPost = $this->blogPostRepository->findOneBySlug($slug);
 
         if (!$blogPost) {
             // Return error.
@@ -66,8 +81,7 @@ class BlogController extends Controller
      */
     public function authorAction($name)
     {
-        $authorRepo = $this->getDoctrine()->getManager()->getRepository('AppBundle:Author');
-        $author = $authorRepo->findOneByUsername($name);
+        $author = $this->authorRepository->findOneByUsername($name);
 
         if (!$author) {
             // Add flash and redirect to index
@@ -77,15 +91,5 @@ class BlogController extends Controller
         return $this->render('blog/author.html.twig', [
             'author' => $author
         ]);
-    }
-
-    /**
-     * @return array
-     */
-    private function getAuthors()
-    {
-        $authorRepo = $this->getDoctrine()->getManager()->getRepository('AppBundle:Author');
-
-        return $authorRepo->findAll();
     }
 }
