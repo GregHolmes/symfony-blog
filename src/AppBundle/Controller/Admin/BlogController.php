@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BlogController extends Controller
 {
     /** @var integer */
-    const ENTRY_LIMIT = 40;
+    const ENTRY_LIMIT = 5;
 
     /**
      * @Route("/", name="admin_index")
@@ -132,7 +132,7 @@ class BlogController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
 
         // Check whether user already has an author.
-        if ($author = $entityManager->getRepository('AppBundle:Author')->findOneByUsername($this->getUser()->getUserName())) {
+        if ($entityManager->getRepository('AppBundle:Author')->findOneByUsername($this->getUser()->getUserName())) {
             // Redirect to dashboard.
             $this->addFlash('error','Unable to create author, author already exists!');
 
@@ -151,9 +151,10 @@ class BlogController extends Controller
             $entityManager->persist($author);
             $entityManager->flush($author);
 
+            $request->getSession()->set('user_is_author', true);
             $this->addFlash('success','Congratulations! You are now an author.');
 
-            return $this->redirectToRoute('entries');
+            return $this->redirectToRoute('admin_entries');
         }
 
         return $this->render('admin/blog/author.html.twig', [
