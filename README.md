@@ -41,6 +41,11 @@ Great. Auth0 is now set up!
  you want it to be. You can find more information on the following keys and tokens required at the bottom of this document.
  
 Ok So now you'll be asked to put in the database and auth0 parameters. These are listed as below:
+* database_host: localhost
+* database_port: (just press return, it will use default 3306 unless yours is any different)
+* database_name: (The name of your database)
+* database_user: (database username)
+* database_password: (your database password)
 * auth0_client_id: (Client ID on Auth0)
 * auth0_client_secret: (Client Secret on Auth0)
 * auth0_domain: (This is the base_url without the https:// or http://)
@@ -53,7 +58,14 @@ You're now ready to go! In your browser enter the url: `http://127.0.0.1:8000`
 
 ### Prepopulating the database
 
+Ok, we're now needing the database created and populating it with some data.
 
+* We need to create the database by running the following command: `doctrine:database:create`
+
+**NOTE** `doctrine:database:create` will use the database name you've put into the parameters file above to create a database for you.
+* Running the following command will put a blog post and an author into your database: `php bin/console doctrine:fixtures:load`
+
+**NOTE** `php bin/console doctrine:fixtures:load` won't have the author linked to auth0 so you won't be able to log in via that user. However, if you want to put more entries into it for fixtures, you'll find the code in `symfony-blog/src/AppBundle/DataFixtures/ORM/Fixtures.php`
 ## Authorisation tokens and keys
 
 ### Auth0
@@ -65,8 +77,6 @@ Copy the following parameters into your parameters file with their specific keys
 * auth0_client_id: (Client ID on Auth0)
 * auth0_client_secret: (Client Secret on Auth0)
 * auth0_base_url: (Domain on Auth0)
-
-
 
 ## License
 
