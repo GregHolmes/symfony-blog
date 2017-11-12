@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BlogController extends Controller
 {
+    /** @var integer */
+    const ENTRY_LIMIT = 5;
+
     /** @var EntityManagerInterface */
     private $entityManager;
 
@@ -45,8 +48,10 @@ class BlogController extends Controller
         }
 
         return $this->render('blog/entries.html.twig', [
-            'blogPosts' => $this->blogPostRepository->findAll(),
+            'blogPosts' => $this->blogPostRepository->getAllPosts($page, self::ENTRY_LIMIT),
+            'totalBlogPosts' => $this->blogPostRepository->getPostCount(),
             'authors' => $this->authorRepository->findAll(),
+            'entryLimit' => self::ENTRY_LIMIT,
             'page' => $page
         ]);
     }
@@ -63,8 +68,9 @@ class BlogController extends Controller
         $blogPost = $this->blogPostRepository->findOneBySlug($slug);
 
         if (!$blogPost) {
-            // Return error.
-            // Redirect to index
+            $this->addFlash('error','Unable to find entry!');
+
+            return $this->redirectToRoute('entries');
         }
 
         return $this->render('blog/entry.html.twig', [
@@ -84,8 +90,9 @@ class BlogController extends Controller
         $author = $this->authorRepository->findOneByUsername($name);
 
         if (!$author) {
-            // Add flash and redirect to index
-            exit;
+            $this->addFlash('error','Unable to remove author!');
+
+            return $this->redirectToRoute('entries');
         }
 
         return $this->render('blog/author.html.twig', [

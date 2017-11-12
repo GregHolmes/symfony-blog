@@ -50,12 +50,6 @@ class BlogController extends Controller
      */
     public function entriesAction(Request $request)
     {
-        $page = 1;
-
-        if ($request->get('page')) {
-            $page = $request->get('page');
-        }
-
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
 
         $blogPosts = [];
@@ -65,8 +59,7 @@ class BlogController extends Controller
         }
 
         return $this->render('admin/blog/entries.html.twig', [
-            'blogPosts' => $blogPosts,
-            'page' => $page
+            'blogPosts' => $blogPosts
         ]);
     }
 
@@ -79,18 +72,13 @@ class BlogController extends Controller
      */
     public function deleteEntryAction($entryId)
     {
-        $blogPost = $this->blogPostRepository->findOneBySlug($entryId);
-
-        if (!$blogPost) {
-            // No blog post,
-            exit;
-        }
-
+        $blogPost = $this->blogPostRepository->findOneById($entryId);
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
 
-        if ($author !== $blogPost->getAuthor()) {
-            // Not same author
-            exit;
+        if (!$blogPost || $author !== $blogPost->getAuthor()) {
+            $this->addFlash('error','Unable to remove entry!');
+
+            return $this->redirectToRoute('admin_entries');
         }
 
         $this->entityManager->remove($blogPost);

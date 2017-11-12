@@ -56,23 +56,22 @@
                     </div>
                 {% endfor %}
 
-                {#{% set canPrevious = page > 1 %}#}
-                {#{% set canNext = blogPost.getLimit + blogPost.getSkip <= blogPost.getTotal %}#}
-
-                {#<nav>#}
-                    {#<ul class="pager">#}
-                        {#<li class="previous {% if canPrevious == false %}disabled{% endif %}">#}
-                            {#<a href="{% if canPrevious %}{{ path('entries', {'page': page - 1}) }}{% endif %}">#}
-                                {#<span aria-hidden="true">&larr;</span> Older#}
-                            {#</a>#}
-                        {#</li>#}
-                        {#<li class="next {% if canNext == false %}disabled{% endif %}">#}
-                            {#<a href="{% if canNext %}{{ path('entries', {'page': page + 1}) }}{% endif %}">#}
-                                {#Newer <span aria-hidden="true">&rarr;</span>#}
-                            {#</a>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</nav>#}
+                {% set canPrevious = page > 1 %}
+                {% set canNext = (page * entryLimit) < totalBlogPosts %}
+                <nav>
+                    <ul class="pager">
+                        <li class="previous {% if canPrevious == false %}disabled{% endif %}">
+                            <a href="{% if canPrevious %}{{ path('entries', {'page': page - 1}) }}{% endif %}">
+                                <span aria-hidden="true">&larr;</span> Older
+                            </a>
+                        </li>
+                        <li class="next {% if canNext == false %}disabled{% endif %}">
+                            <a href="{% if canNext %}{{ path('entries', {'page': page + 1}) }}{% endif %}">
+                                Newer <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 <div class="sidebar-module">

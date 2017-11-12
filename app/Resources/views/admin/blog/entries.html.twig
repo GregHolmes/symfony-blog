@@ -48,24 +48,6 @@
                         </tr>
                     {% endfor %}
                 </table>
-
-                {#{% set canPrevious = page > 1 %}#}
-                {#{% set canNext = blogPosts.getLimit + blogPosts.getSkip <= blogPosts.getTotal %}#}
-
-                {#<nav>#}
-                    {#<ul class="pager">#}
-                        {#<li class="previous {% if canPrevious == false %}disabled{% endif %}">#}
-                            {#<a href="{% if canPrevious %}{{ path('admin_entries', {'page': page - 1}) }}{% endif %}">#}
-                                {#<span aria-hidden="true">&larr;</span> Older#}
-                            {#</a>#}
-                        {#</li>#}
-                        {#<li class="next {% if canNext == false %}disabled{% endif %}">#}
-                            {#<a href="{% if canNext %}{{ path('admin_entries', {'page': page + 1}) }}{% endif %}">#}
-                                {#Newer <span aria-hidden="true">&rarr;</span>#}
-                            {#</a>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</nav>#}
             </div>
         </div>
     </div>
