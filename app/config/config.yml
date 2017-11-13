@@ -80,12 +80,23 @@ doctrine_migrations:
     name: Application Migrations
     organize_migrations: false # Version >=1.2 Possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
 
+#hwi_oauth:
+#    firewall_names: [secured_area]
+#    resource_owners:
+#        auth0:
+#            type: auth0
+#            base_url: '%auth0_base_url%'
+#            client_id: '%auth0_client_id%'
+#            client_secret: '%auth0_client_secret%'
+#            scope: 'email'
 hwi_oauth:
     firewall_names: [secured_area]
     resource_owners:
         auth0:
-            type: auth0
+            type: oauth2
+            class: 'AppBundle\Auth0ResourceOwner'
             base_url: '%auth0_base_url%'
             client_id: '%auth0_client_id%'
             client_secret: '%auth0_client_secret%'
-            scope: 'email'
+            redirect_uri: '%auth0_callback_url%'
+            scope: "openid profile"
