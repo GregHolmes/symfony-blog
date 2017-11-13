@@ -58,7 +58,7 @@ Now in your Terminal client type the following command: `php bin/console server:
 
 Ok, we're now needing the database created and populating it with some data.
 
-* We need to create the database by running the following command: `php bin/console/doctrine:database:create`
+* We need to create the database by running the following command: `php bin/console doctrine:database:create`
 
 **NOTE** `php bin/console doctrine:database:create` will use the database name you've put into the parameters file above to create a database for you.
 
