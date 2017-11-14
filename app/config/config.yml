@@ -37,21 +37,16 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    globals:
-        auth0_base_url: '%auth0_base_url%'
-        auth0_client_id: '%auth0_client_id%'
-        auth0_callback_url: '%auth0_callback_url%'
-        auth0_domain: '%auth0_domain%'
 
 # Doctrine Configuration
 doctrine:
     dbal:
         driver: pdo_mysql
-        host: '%database_host%'
-        port: '%database_port%'
-        dbname: '%database_name%'
-        user: '%database_user%'
-        password: '%database_password%'
+        host: '%env(DATABASE_HOST)%'
+        port: '%env(DATABASE_PORT)%'
+        dbname: '%env(DATABASE_NAME)%'
+        user: '%env(DATABASE_USER)%'
+        password: '%env(DATABASE_PASSWORD)%'
         charset: UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -80,15 +75,6 @@ doctrine_migrations:
     name: Application Migrations
     organize_migrations: false # Version >=1.2 Possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
 
-#hwi_oauth:
-#    firewall_names: [secured_area]
-#    resource_owners:
-#        auth0:
-#            type: auth0
-#            base_url: '%auth0_base_url%'
-#            client_id: '%auth0_client_id%'
-#            client_secret: '%auth0_client_secret%'
-#            scope: 'email'
 hwi_oauth:
     firewall_names: [secured_area]
     resource_owners:

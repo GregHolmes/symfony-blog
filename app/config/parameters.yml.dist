@@ -17,9 +17,3 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
-
-    auth0_client_id: ~
-    auth0_client_secret: ~
-    auth0_domain: ~
-    auth0_base_url: ~
-    auth0_callback_url: ~
