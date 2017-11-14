@@ -93,10 +93,12 @@ hwi_oauth:
     firewall_names: [secured_area]
     resource_owners:
         auth0:
-            type: oauth2
-            class: 'AppBundle\Auth0ResourceOwner'
-            base_url: '%auth0_base_url%'
-            client_id: '%auth0_client_id%'
-            client_secret: '%auth0_client_secret%'
-            redirect_uri: '%auth0_callback_url%'
+            type:                oauth2
+            class:               'AppBundle\Auth0ResourceOwner'
+            client_id:           "%env(AUTH0_CLIENT_ID)%"
+            client_secret:       "%env(AUTH0_CLIENT_SECRET)%"
+            base_url:            "https://%env(AUTH0_DOMAIN)%"
+#            Uncomment this lines if you set audience in .env file
+#            options:
+#                audience:        "%env(AUTH0_AUDIENCE)%"
             scope: "openid profile"

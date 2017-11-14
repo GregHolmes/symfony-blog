@@ -4,7 +4,6 @@ namespace AppBundle;
 
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GenericOAuth2ResourceOwner;
 
 class Auth0ResourceOwner extends GenericOAuth2ResourceOwner
@@ -41,7 +40,7 @@ class Auth0ResourceOwner extends GenericOAuth2ResourceOwner
             'authorization_url' => '{base_url}/authorize',
             'access_token_url' => '{base_url}/oauth/token',
             'infos_url' => '{base_url}/userinfo',
-            'audience' => 'https://'.getenv('AUTH0_DOMAIN').'/userinfo',
+            'audience' => '{base_url}/userinfo',
         ));
 
         $resolver->setRequired(array(
@@ -55,5 +54,6 @@ class Auth0ResourceOwner extends GenericOAuth2ResourceOwner
         $resolver->setNormalizer('authorization_url', $normalizer);
         $resolver->setNormalizer('access_token_url', $normalizer);
         $resolver->setNormalizer('infos_url', $normalizer);
+        $resolver->setNormalizer('audience', $normalizer);
     }
 }

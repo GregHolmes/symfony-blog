@@ -22,6 +22,11 @@ if ($debug) {
     Debug::enable();
 }
 
+try {
+    (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../.env');
+} catch (\Symfony\Component\Dotenv\Exception\PathException $e){
+}
+
 $kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
 $application->run($input);

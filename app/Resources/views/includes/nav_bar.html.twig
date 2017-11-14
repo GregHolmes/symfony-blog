@@ -8,7 +8,7 @@
                 <li><a href="{{ path("admin_index") }}">Admin</a></li>
                 <li><a href="{{ logout_url("secured_area") }}">Logout</a></li>
             {% else %}
-                <li class="active"><a onclick="window.signin();">Login</a></li>
+                <li class="active"><a href="/connect/auth0">Login</a></li>
             {% endif %}
         </ul>
     </div>

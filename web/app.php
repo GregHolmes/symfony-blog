@@ -7,6 +7,11 @@ if (PHP_VERSION_ID < 70000) {
     include_once __DIR__.'/../var/bootstrap.php.cache';
 }
 
+try {
+    (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../.env');
+} catch (\Symfony\Component\Dotenv\Exception\PathException $e){
+}
+
 $kernel = new AppKernel('prod', false);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();

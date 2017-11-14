@@ -21,6 +21,11 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 require __DIR__.'/../vendor/autoload.php';
 Debug::enable();
 
+try {
+    (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../.env');
+} catch (\Symfony\Component\Dotenv\Exception\PathException $e){
+}
+
 $kernel = new AppKernel('dev', true);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
