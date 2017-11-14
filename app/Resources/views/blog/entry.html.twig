@@ -17,7 +17,7 @@
             <div class="col-sm-8 blog-main">
                 <div class="blog-post">
                     <h2 class="blog-post-title">{{ blogPost.title }}</h2>
-                    <p class="blog-post-meta">{{ blogPost.updatedAt|date('F j, Y') }} by <a href="#">{{ blogPost.author.name }}</a></p>
+                    <p class="blog-post-meta">{{ blogPost.updatedAt|date('F j, Y') }} by <a href="{{ path('author', {'name': blogPost.author.username|url_encode }) }}">{{ blogPost.author.name }}</a></p>
                     <h3>Description:</h3>
                     <p>{{ blogPost.description|raw }}</p>
 
