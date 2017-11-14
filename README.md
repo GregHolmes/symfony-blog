@@ -56,6 +56,8 @@ Update the following keys with your database credentials:
 
 * Install the third party libraries with `composer install`
 
+**NOTE** Please just press enter for each Parameters entry it requires you to input. You won't be using any of these.
+
 Now in your Terminal client type the following command: `php bin/console server:start`
 
 ### Prepopulating the database
