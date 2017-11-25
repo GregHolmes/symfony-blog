@@ -4,7 +4,6 @@ namespace AppBundle;
 
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GenericOAuth2ResourceOwner;
 
 class Auth0ResourceOwner extends GenericOAuth2ResourceOwner
@@ -55,5 +54,6 @@ class Auth0ResourceOwner extends GenericOAuth2ResourceOwner
         $resolver->setNormalizer('authorization_url', $normalizer);
         $resolver->setNormalizer('access_token_url', $normalizer);
         $resolver->setNormalizer('infos_url', $normalizer);
+        $resolver->setNormalizer('audience', $normalizer);
     }
 }
