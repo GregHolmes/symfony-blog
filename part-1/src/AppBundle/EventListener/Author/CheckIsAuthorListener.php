@@ -64,7 +64,7 @@ class CheckIsAuthorListener
             return;
         }
 
-        $route = $this->router->generate('admin_author_create');
+        $route = $this->router->generate('author_create');
 
         // Check we are not already attempting to create an author!
         if (0 === strpos($event->getRequest()->getPathInfo(), $route)) {
