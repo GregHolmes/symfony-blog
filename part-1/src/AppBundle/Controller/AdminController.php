@@ -40,7 +40,7 @@ class AdminController extends Controller
             // Redirect to dashboard.
             $this->addFlash('error','Unable to create author, author already exists!');
 
-            return $this->redirectToRoute('entries');
+            return $this->redirectToRoute('homepage');
         }
 
         $author = new Author();
@@ -56,7 +56,7 @@ class AdminController extends Controller
             $request->getSession()->set('user_is_author', true);
             $this->addFlash('success','Congratulations! You are now an author.');
 
-            return $this->redirectToRoute('entries');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('AppBundle:Admin:create_author.html.twig', array(
