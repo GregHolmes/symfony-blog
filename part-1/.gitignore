@@ -16,3 +16,5 @@
 /vendor/
 /web/bundles/
 .env
+.idea/*
+.DS_Store
