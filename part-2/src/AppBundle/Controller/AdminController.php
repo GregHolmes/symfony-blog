@@ -31,14 +31,14 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/author/create", name="author_create")
+     * @Route("/admin/author/create", name="author_create")
      */
     public function createAuthorAction(Request $request)
     {
         // Check whether user already has an author.
         if ($this->authorRepository->findOneByUsername($this->getUser()->getUserName())) {
             // Redirect to dashboard.
-            $this->addFlash('error', 'Unable to create author, author already exists!');
+            $this->addFlash('error','Unable to create author, author already exists!');
 
             return $this->redirectToRoute('homepage');
         }
@@ -54,7 +54,7 @@ class AdminController extends Controller
             $this->entityManager->flush($author);
 
             $request->getSession()->set('user_is_author', true);
-            $this->addFlash('success', 'Congratulations! You are now an author.');
+            $this->addFlash('success','Congratulations! You are now an author.');
 
             return $this->redirectToRoute('homepage');
         }

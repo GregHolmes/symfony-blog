@@ -3,22 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- Custom CSS File -->
-    <script src="css/style.css"></script>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/global.css') }}" />
+    {% endblock %}
 </head>
 <body>
 {% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('build/app.js') }}"></script>
+{% endblock %}
 </body>
 </html>

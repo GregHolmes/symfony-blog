@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Author
  *
  * @ORM\Table(name="author")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorRepository")
  */
 class Author
 {
@@ -311,3 +311,4 @@ class Author
         return $this->github;
     }
 }
+

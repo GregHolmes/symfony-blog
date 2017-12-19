@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BlogPost
  *
  * @ORM\Table(name="blog_post")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogPostRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class BlogPost
@@ -273,3 +273,4 @@ class BlogPost
         $this->setUpdatedAt(new \DateTime());
     }
 }
+

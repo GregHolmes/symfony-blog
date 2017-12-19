@@ -10,7 +10,7 @@ class AdminControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/author/create');
+        $crawler = $client->request('GET', '/admin/author/create');
     }
 
 }

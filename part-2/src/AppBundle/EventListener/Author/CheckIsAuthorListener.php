@@ -85,7 +85,7 @@ class CheckIsAuthorListener
                 'Your author access is being set up, this may take up to 30 seconds. Please try again shortly.'
             );
 
-            $route = $this->router->generate('homepage');
+            $route = $this->router->generate('entries');
         } else {
             $this->session->getFlashBag()->add(
                 'warning',

@@ -4,7 +4,6 @@ namespace AppBundle;
 
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GenericOAuth2ResourceOwner;
 
 class Auth0ResourceOwner extends GenericOAuth2ResourceOwner

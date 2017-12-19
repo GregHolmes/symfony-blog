@@ -1,0 +1,21 @@
+{
+    "name": "@types/tapable",
+    "version": "0.2.4",
+    "description": "TypeScript definitions for tapable",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "e-cloud",
+            "url": "https://github.com/e-cloud"
+        }
+    ],
+    "main": "",
+    "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "79ac4245792f91afc5f8a7db9d4766970a979236f8d61d3973e1172e7bb55754",
+    "typeScriptVersion": "2.0"
+}
