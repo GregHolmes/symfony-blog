@@ -1,0 +1,30 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Blog:entry{% endblock %}
+
+{% block body %}
+<div class="container">
+ <div class="blog-header">
+     <h1 class="blog-title">Blog tutorial</h1>
+     <p class="lead blog-description">A basic description of the blog, built in Symfony, styled in Bootstrap 3, secured by Auth0.</p>
+ </div>
+
+ <div class="row">
+     <div class="col-sm-8 blog-main">
+         <div class="blog-post">
+             <h2 class="blog-post-title">{{ blogPost.title }}</h2>
+             <p class="blog-post-meta">
+                {{ blogPost.updatedAt|date('F j, Y') }} by <a href="{{ path('author', {'name': blogPost.author.username|url_encode }) }}">
+                    {{ blogPost.author.name }}
+                </a>
+            </p>
+             <h3>Description:</h3>
+             <p>{{ blogPost.description|raw }}</p>
+
+             <h3>Body:</h3>
+             <p>{{ blogPost.body|raw }}</p>
+         </div>
+     </div>
+ </div>
+</div>
+{% endblock %}
